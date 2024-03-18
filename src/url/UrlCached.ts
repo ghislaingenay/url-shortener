@@ -1,5 +1,5 @@
 import fs from "fs";
-import { FileExplorer } from "./FileExplorer";
+import { FileExplorer } from "../utils/FileExplorer";
 
 type UrlCountRange = {
   max: number;

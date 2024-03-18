@@ -1,4 +1,4 @@
-import { BaseValidator } from "./BaseValidator";
+import { BaseValidator } from "../utils/BaseValidator";
 
 interface Url {
   shortUrl: string;
