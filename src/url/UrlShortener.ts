@@ -2,7 +2,7 @@ import { UrlCached, countCache } from "./UrlCached";
 import { UrlDB } from "./UrlDB";
 import { Url, UrlValidator } from "./UrlValidator";
 
-type GetLongUrl =
+export type GetLongUrl =
   | { mode: "id"; id: number; shortUrl?: undefined }
   | { mode: "url"; shortUrl: string; id?: undefined };
 

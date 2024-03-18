@@ -1,4 +1,4 @@
-import { URLShortener } from "./UrlShortener";
+import { GetLongUrl, URLShortener } from "./UrlShortener";
 
 export class UrlService {
   URLShortener: URLShortener;
@@ -10,7 +10,7 @@ export class UrlService {
     return this.URLShortener.createURL(longUrl);
   }
 
-  async getLongUrl(shortUrl: GetLo): Promise<string> {
+  async getLongUrl(shortUrl: GetLongUrl): Promise<string> {
     return this.URLShortener.getLongUrl(shortUrl);
   }
 }
