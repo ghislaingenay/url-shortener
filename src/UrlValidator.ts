@@ -5,12 +5,12 @@ interface Url {
   longUrl: string;
   createdAt: Date;
   requested: number;
-  count: number;
+  id: number;
 }
 
 export type { Url };
 
-export class UrlValidation extends BaseValidator<Url> {
+export class UrlValidator extends BaseValidator<Url> {
   constructor(data: Url) {
     super(data);
   }

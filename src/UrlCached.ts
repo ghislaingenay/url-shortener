@@ -13,7 +13,7 @@ export class UrlCached {
   FILE_NAME = "cache.json";
 
   // Related to count
-  getUrlCount(): UrlCountRange {
+  getUrlId(): UrlCountRange {
     if (FileExplorer.isPathValid(this.FILE_NAME) === false)
       throw new Error("File not found");
 
@@ -28,12 +28,12 @@ export class UrlCached {
     return JSON.parse(value);
   }
 
-  get currentCount() {
-    return this.getUrlCount().count;
+  get currentId() {
+    return this.getUrlId().count;
   }
 
   private updateMaxMinCount(countData?: UrlCountRange) {
-    const data = countData || this.getUrlCount();
+    const data = countData || this.getUrlId();
     const [newMin, newMax] = [data.min + this.LOT, data.min + this.LOT * 2];
     fs.writeFileSync(
       this.FILE_NAME,
@@ -47,12 +47,12 @@ export class UrlCached {
   }
 
   updateCount() {
-    const countData = this.getUrlCount();
-    const newCount = this.currentCount + 1;
+    const countData = this.getUrlId();
+    const newCount = this.currentId + 1;
     if (newCount > countData.max) this.updateMaxMinCount(countData);
     fs.writeFileSync(
       this.FILE_NAME,
-      JSON.stringify({ ...this.getUrlCount(), count: newCount }),
+      JSON.stringify({ ...this.getUrlId(), count: newCount }),
       "utf8"
     );
   }
