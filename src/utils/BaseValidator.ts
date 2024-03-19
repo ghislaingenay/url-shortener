@@ -27,7 +27,8 @@ export class BaseValidator<T> {
   }
 
   private getValueByKey(key: KeyOf<T>): any {
-    if (!this._data[key]) throw new TypeError("Data is not defined");
+    if (this._data[key] === null || this._data[key] === undefined)
+      throw new TypeError(`Data is not defined for ${key.toString()}`);
     return this._data[key] as unknown as any;
   }
 
@@ -48,6 +49,10 @@ export class BaseValidator<T> {
     return typeof value === "number";
   }
 
+  private isDefined(value: any) {
+    return value !== null && value !== undefined;
+  }
+
   /////////// STRING //////////////
   isString(key: Array<KeyOf<T>>, options?: CheckTextOptions): BaseValidator<T> {
     this._history.push("isString");
@@ -64,8 +69,9 @@ export class BaseValidator<T> {
       const value = this.getValueByKey(k) as string;
       if (value && typeof value !== "string")
         throw new Error(`${String(k)} should be a string`);
-      if (!required && !value) return;
-      if (required && !value) throw new Error(`${String(key)} is required`);
+      if (!required && !this.isDefined(value)) return;
+      if (required && !this.isDefined(value))
+        throw new Error(`${String(key)} is required`);
       if (max && value.length > max)
         throw new Error(`${String(key)} should not exceed ${max} characters`);
       if (min && value.length < min)
@@ -89,7 +95,8 @@ export class BaseValidator<T> {
       const value = this.getValueByKey(k) as number;
       if (value && typeof value !== "number")
         throw new Error(`${String(k)} should be a number`);
-      if (required && !value) throw new Error(`${String(key)} is required`);
+      if (required && !this.isDefined(value))
+        throw new Error(`${String(key)} is required`);
     });
     return this;
   }
@@ -107,7 +114,8 @@ export class BaseValidator<T> {
       const value = this.getValueByKey(k) as boolean;
       if (value && typeof value !== "boolean")
         throw new Error(`${String(k)} should be a boolean`);
-      if (required && !value) throw new Error(`${String(key)} is required`);
+      if (required && !this.isDefined(value))
+        throw new Error(`${String(key)} is required`);
     });
     return this;
   }
@@ -124,7 +132,8 @@ export class BaseValidator<T> {
       const value = this.getValueByKey(k) as any;
       if (value && typeof value !== "string")
         throw new Error(`${String(k)} should be a string`);
-      if (required && !value) throw new Error(`${String(key)} is required`);
+      if (required && !this.isDefined(value))
+        throw new Error(`${String(key)} is required`);
       if (value !== 0 || value !== 1)
         throw new Error(`${String(key)} should be 0 or 1`);
     });
@@ -163,7 +172,8 @@ export class BaseValidator<T> {
       const value = this.getValueByKey(k) as Date;
       if (value && !(value instanceof Date))
         throw new TypeError(`${String(k)} should be a Date`);
-      if (required && !value) throw new TypeError(`${String(key)} is required`);
+      if (required && !this.isDefined(value))
+        throw new TypeError(`${String(key)} is required`);
     });
     return this;
   }
@@ -225,7 +235,7 @@ export class BaseValidator<T> {
     const keyList = Array.isArray(key) ? key : [key];
     keyList.forEach((k) => {
       const value = this.getValueByKey(k);
-      if (value !== null || value !== undefined)
+      if (!this.isDefined(value))
         throw new Error(`${String(key)} should not be null`);
     });
     return this;
@@ -235,7 +245,8 @@ export class BaseValidator<T> {
   shouldContainKey(key: KeyOf<T>): BaseValidator<T> {
     this._history.push("shouldContainKeys");
     const value = this.getValueByKey(key);
-    if (!value) throw new Error(`${String(key)} should be defined`);
+    if (!this.isDefined(value))
+      throw new Error(`${String(key)} should be defined`);
     return this;
   }
 
