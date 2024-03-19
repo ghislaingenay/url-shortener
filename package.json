@@ -4,7 +4,7 @@
   "description": "",
   "main": "tsx watch src/index.ts",
   "scripts": {
-    "dev": "tsc -w src/index.ts",
+    "dev": "tsc --noEmit -w src/index.ts",
     "build": "tsc",
     "format": "prettier --write ."
   },
