@@ -17,11 +17,11 @@ export class UrlCached {
     if (FileExplorer.isPathValid(this.FILE_NAME) === false)
       throw new Error("File not found");
     const value = FileExplorer.readSync(this.FILE_NAME);
-    return JSON.parse(value).id;
+    return JSON.parse(value);
   }
 
   get currentId() {
-    return this.getUrlId().count;
+    return Number(this.getUrlId().count);
   }
 
   private updateMaxMinCount(countData?: UrlCountRange) {

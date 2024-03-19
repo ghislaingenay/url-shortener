@@ -17,7 +17,6 @@ export class FileExplorer {
 
   static isPathValid(link: string): boolean {
     const completePath = FileExplorer.joinPath(process.cwd(), link);
-    console.log({ completePath, exist: fs.existsSync(completePath) });
     return fs.existsSync(completePath);
   }
 

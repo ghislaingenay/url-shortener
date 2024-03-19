@@ -53,6 +53,7 @@ export class URLShortener {
     // Check if url already exists
 
     // Validation
+    // id shouldn't be feifned and should be unique and handled ICR by the db
     const sanitizedData = validator
       .isString(["longUrl"], { max: 2048, min: 1, isRequired: true })
       .isNumber(["id"], { isRequired: true })
