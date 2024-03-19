@@ -15,7 +15,7 @@ export class URLShortener {
     this.urlCache = countCache;
   }
 
-  idToShortURL = (id: number): string => {
+  private idToShortURL = (id: number): string => {
     let shortURL = "";
     while (id > 0) {
       shortURL = this.ALPHABET[id % this.charCount] + shortURL;
@@ -24,7 +24,7 @@ export class URLShortener {
     return shortURL;
   };
 
-  shortURLToID = (shortURL: string): number => {
+  private shortURLToID = (shortURL: string): number => {
     let id = 0;
     for (let i = 0; i < shortURL.length; i++) {
       id = id * this.charCount + this.ALPHABET.indexOf(shortURL[i]);
@@ -49,6 +49,10 @@ export class URLShortener {
     };
     // Validate url
     const validator = new UrlValidator(data);
+
+    // Check if url already exists
+
+    // Validation
     const sanitizedData = validator
       .isString(["longUrl"], { max: 2048, min: 1, isRequired: true })
       .isNumber(["id"], { isRequired: true })
@@ -58,22 +62,28 @@ export class URLShortener {
         max: 10,
         min: 1,
       })
+      // .do("is_unique_short_link", () => {
+      //   const urls = db.getAllUrls();
+      //   const url = urls.find((url) => url.shortUrl === shortUrl);
+      //   if (url) throw new Error("Short url already exists");
+      // })
       .validate().data;
 
     db.saveUrl(sanitizedData);
     return shortUrl;
   };
 
-  initDb = () => {
+  private initDb = () => {
     return new UrlDB();
   };
 
   getLongUrl({ shortUrl, mode, id }: GetLongUrl): string {
+    // would need to add requested count ++
     if (mode === "id") return this.getLongUrlByShortId(id);
     return this.getLongUrlByShortUrl(shortUrl);
   }
 
-  private getAllUrls = (): Url[] => {
+  getAllUrls = (): Url[] => {
     const db = this.initDb();
     return db.getAllUrls();
   };
