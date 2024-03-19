@@ -14,6 +14,7 @@ app.get("/", (req, res) => {
 
 app.get("/:mode/:id", (req, res) => {
   const { mode, id } = req.params;
+  console.log({ mode, id });
   const urlService = new URLShortener();
   if (mode !== "id" && mode !== "url") throw new Error("Invalid mode");
 
@@ -28,8 +29,9 @@ app.get("/:mode/:id", (req, res) => {
     return { shortUrl: id, mode, id: undefined };
   };
   const params = setLongUrlParams({ mode, id });
+  console.log({ params });
   const longUrl = urlService.getLongUrl(params);
-  res.redirect(longUrl);
+  res.json({ result: true, data: longUrl });
 });
 
 app.post("/", (req, res) => {
