@@ -10,22 +10,14 @@ type UrlCountRange = {
 // DONE USING REDIS
 export class UrlCached {
   LOT = 1000;
-  FILE_NAME = "cache.json";
+  FILE_NAME = "src/url/cache.json";
 
   // Related to count
   getUrlId(): UrlCountRange {
     if (FileExplorer.isPathValid(this.FILE_NAME) === false)
       throw new Error("File not found");
-
-    const value = fs.readFileSync(this.FILE_NAME, "utf8");
-    //   .split("\n")
-    //   .map((value: string) => value.trim())
-    //   .reduce((acc: UrlCountRange, value: string) => {
-    //     const [key, val] = value.split("=");
-    //     acc[key as keyof UrlCountRange] = Number(val);
-    //     return acc;
-    //   }, {} as UrlCountRange);
-    return JSON.parse(value);
+    const value = FileExplorer.readSync(this.FILE_NAME);
+    return JSON.parse(value).id;
   }
 
   get currentId() {

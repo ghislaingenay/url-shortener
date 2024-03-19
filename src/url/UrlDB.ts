@@ -5,7 +5,7 @@ import { Url } from "./UrlValidator";
 
 export class UrlDB {
   private urlCache: UrlCached;
-  FILENAME = "url.json";
+  FILENAME = "src/url/url.json";
   constructor() {
     this.urlCache = countCache;
   }
@@ -13,7 +13,7 @@ export class UrlDB {
   getAllUrls = (): Url[] => {
     if (FileExplorer.isPathValid(this.FILENAME) === false)
       throw new Error("File not found");
-    const value = fs.readFileSync(this.FILENAME, "utf8");
+    const value = FileExplorer.readSync(this.FILENAME);
     return JSON.parse(value);
   };
 

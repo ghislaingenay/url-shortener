@@ -1,6 +1,6 @@
 import bodyParser from "body-parser";
 import express from "express";
-import { GetLongUrl, URLShortener } from "./url/UrlShortener";
+import { URLShortener } from "./url/UrlShortener";
 const app = express();
 const port = 3000;
 

@@ -1,11 +1,27 @@
 import fs from "fs";
+import path from "path";
 
 export class FileExplorer {
-  static isPathValid(path: string): boolean {
-    return fs.existsSync(path);
+  pathname: string;
+  constructor(link: string) {
+    this.pathname = FileExplorer.joinPath(process.cwd(), link);
   }
 
-  static readSync(path: string): string {
-    return fs.readFileSync(path, "utf8");
+  get path(): string {
+    return this.pathname;
+  }
+
+  static joinPath(...paths: string[]): string {
+    return path.join(...paths);
+  }
+
+  static isPathValid(link: string): boolean {
+    const completePath = FileExplorer.joinPath(process.cwd(), link);
+    console.log({ completePath, exist: fs.existsSync(completePath) });
+    return fs.existsSync(completePath);
+  }
+
+  static readSync(link: string): string {
+    return fs.readFileSync(path.join(process.cwd(), link), "utf8");
   }
 }
