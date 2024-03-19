@@ -4,7 +4,7 @@
   "description": "",
   "main": "tsx watch src/index.ts",
   "scripts": {
-    "dev": "tsc --noEmit -w src/index.ts",
+    "dev": "tsnd --respawn src/index.ts",
     "build": "tsc",
     "format": "prettier --write ."
   },
@@ -22,6 +22,7 @@
     "@typescript-eslint/parser": "^7.2.0",
     "eslint": "^8.57.0",
     "prettier": "3.2.5",
+    "ts-node-dev": "^2.0.0",
     "typescript": "^5.4.2"
   }
 }
